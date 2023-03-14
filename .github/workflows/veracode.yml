@@ -1,7 +1,6 @@
-on: 
-  push:
-    branches: [feature-123]
-
+on:
+  pull_request:
+    branches: [main]
 jobs:
 
   pipeline_scan:
