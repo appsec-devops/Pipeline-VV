@@ -1,0 +1,39 @@
+on: 
+  push:
+    branches: [feature-123]
+
+jobs:
+
+  pipeline_scan:
+      runs-on: ubuntu-latest
+      name: pipeline scan
+
+      steps:
+        - name: checkout
+          uses: actions/checkout@v2
+
+        - name: install node v12
+          uses: actions/setup-node@v1
+          with:
+            node-version: 12
+        
+        - name: npm install
+          run: npm install
+          
+        - name: Veracode Pipeline-Scan
+  # You may pin to the exact commit or the version.
+  # uses: veracode/Veracode-pipeline-scan-action@49e420ffbd3aa48823bbf3221fbfa7d61127631a
+          uses: veracode/Veracode-pipeline-scan-action@v1.0.3
+          with:
+            vid: 0622e028745b014ee1d24c72f98a40f4
+    # vkey
+            vkey: 57e357e2a98dcf4e76222c2690a75fe0b0c91dfff1b5b9b46e556af166f3181990befce6a9d645f887951d39e1650846c5531f901be377727ba77cf3594de0ac
+    # Filename of the packaged application to upload and scan.
+    # GITHUB_TOKEN or a repo scoped PAT.
+            token: ${{ github.token }}
+            file: "verademo.war"
+            store_baseline_file: true
+            store_baseline_file_branch: my-featur-branch
+            create_baseline_from: standard
+            baseline_file: "results.json"
+            fail_build: true
